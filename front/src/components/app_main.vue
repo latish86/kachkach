@@ -21,7 +21,7 @@ export default {
 
 <style lang="scss" scoped>
   .content{
-    color: red;
+    padding: 20px;
     margin: 0 auto;
     max-width: 1200px;;
   }
