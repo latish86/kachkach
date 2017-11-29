@@ -25,6 +25,7 @@ export default {
     color: $milk;
     .wrapper{
       max-width: 1200px;   
+      margin: 0 auto;
       padding: 15px;   
       display: flex;
       justify-content: space-between;
