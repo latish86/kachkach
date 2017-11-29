@@ -1,20 +1,29 @@
 <template>
-  <div class="content">
+  <div class="content"> 
     <component v-bind:is="currentView"></component>
   </div>  
 </template>
 
 <script>
 import Days from "./days.vue";
+import AdminPanel from "./admin_panel.vue"
+import { bus } from '../main';
 
 export default {
   components:{
-    'days' : Days
+    'days' : Days,
+    'admin-panel': AdminPanel
   },
   data () {
     return {
       currentView: 'days'
     }
+  },
+  created(){
+    bus.$on('changeMain', (data) => {      
+      this.currentView = data;
+      console.log(this.currentView)
+    })
   }
 }
 </script>
