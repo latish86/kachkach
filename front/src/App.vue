@@ -27,6 +27,10 @@ export default {
 </script>
 
 <style lang="scss">
-  @import './libs/normalize-css/normalize.css'
+  @import './libs/normalize-css/normalize.css';  
+  @import "./scss/fonts.scss";
 
+  body{
+    font-family: 'Main';
+  }
 </style>
