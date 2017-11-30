@@ -16,7 +16,7 @@ export default {
   },
   data () {
     return {
-      currentView: 'days'
+      currentView: 'admin-panel'
     }
   },
   created(){
