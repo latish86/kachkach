@@ -36,20 +36,15 @@ export default {
           one: this.newRes
         }
       }
-      
-      // Get запрос
-      // this.$http.get(this.urlNewRes,  options).then(function(res){
-      //   // Обработка ответа
-      //   this.dataResponse = res.body.query
-      // }, function(err){
-      //   // Ошибка ответа
-      //   console.log('Ошибка'+err)
-      // })
 
       // // POST запрос
-      this.$http.post(this.urlNewRes, { data: this.newRes },options).then(responce =>{
+      this.$http.post(this.urlNewRes, {
+        one: 'one',
+        two: 'two321321',
+        three: 'three'
+      }).then(responce =>{
         // Обработка ответа
-        this.dataResponse = responce
+        this.dataResponse = responce.body
       }, error =>{
         // Ошибка ответа
       })

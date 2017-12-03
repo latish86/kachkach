@@ -1,9 +1,11 @@
 var express = require('express');
 var cors = require('cors');
 var app = express();
+var bodyParser = require('body-parser');
 
 app.use(express.static('front'));
 app.use(cors());
+app.use(bodyParser.json());
 
 
 
@@ -11,27 +13,8 @@ app.get('/', function(req,res){
   res.send('asdfasdfd')
 })
 
-// app.get('/test', function(req,res){
-//   var data = {
-//     'protocol': req.protocol, // Протокол запроса
-//     'body' : req.body,  // ???
-//     'params' : req.params, // ???
-//     'hostname' : req.hostname, // Имя хоста
-//     'originalUrl':req.originalUrl, // Полный
-//     'query': req.query // JSON с параметрами
-//   }
 
-//   res.type('html').set({
-//     'Access-Control-Allow-Origin': '*', // Вот это нужно для кросдоменного запроса.
-//   }).json(data);
-// })
-
-
-
-
-
-
-app.post('/test',  cors() ,function(req,res){
+app.post('/test',  function(req,res){
   var data = {
     'protocol': req.protocol, // Протокол запроса
     'body' : req.body,  // ???
@@ -41,11 +24,7 @@ app.post('/test',  cors() ,function(req,res){
     'query': 'sasdasadds' // JSON с параметрами
   }
 
-  res.type('html').set({
-    'Access-Control-Allow-Origin': '*', // Вот это нужно для кросдоменного запроса.
-    'Access-Control-Allow-Headers': 'origin, content-type, accept',
-    "Access-Control-Allow-Methods": "*"
-  }).json(data);
+  res.send(data);
 
 })
 
