@@ -1,7 +1,8 @@
-var express = require('express');
-var cors = require('cors');
-var app = express();
-var bodyParser = require('body-parser');
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const bodyParser = require('body-parser');
+const mongoClient = require('mongodb').MongoClient;
 
 app.use(express.static('front'));
 app.use(cors());
@@ -9,26 +10,56 @@ app.use(bodyParser.json());
 
 
 
-app.get('/', function(req,res){
+app.get('/', function (req, res) {
   res.send('asdfasdfd')
 })
 
 
-app.post('/test',  function(req,res){
-  var data = {
-    'protocol': req.protocol, // Протокол запроса
-    'body' : req.body,  // ???
-    'params' : req.params, // ???
-    'hostname' : req.hostname, // Имя хоста
-    'originalUrl':req.originalUrl, // Полный
-    'query': 'sasdasadds' // JSON с параметрами
-  }
+app.post('/test', function (req, res) {
+  let data = req.body
+  console.log(req.body);
 
-  res.send(data);
+  // Подключаемся к базе (test название БД. Авторизация отключена.)
+  mongoClient.connect("mongodb://localhost:27017/test", function (err, db) {
+    if (err) {
+      return console.log(err);
+    }
 
+    var collection = db.collection('test');
+
+    collection.insert(data, function (err, result) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log(result.ops);
+      db.close();
+    });
+    // взаимодействие с базой данных
+    console.log('All ok!!!')
+    db.close();
+  });  
+})
+app.post('/delbd', function(req,res){
+  mongoClient.connect("mongodb://localhost:27017/test", function (err, db) {
+    if (err) {
+      return console.log(err);
+    }
+
+    var collection = db.collection('test');
+
+    collection.drop( function (err, result) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log(result.ops);
+      console.log('Коллекция удалена')
+      db.close();
+    });    
+    db.close();
+  }); 
 })
 
 
-app.listen(3000, function(){
+app.listen(3000, function () {
   console.log('Server Up!');
 })

@@ -3,8 +3,8 @@
     <h2>Admin Panel:</h2>
     <ul>
       <li>Настройки</li>
-      <li>Добавить тестовые данные</li>
-      <li>Отчистить БД</li>
+      <li @click="addTestData()">Добавить тестовые данные</li>
+      <li @click="clearBD()">Отчистить БД</li>
       <li>Пользователи</li>
       <li>Разное</li>
     </ul>
@@ -15,6 +15,7 @@
 
 <script>
 import ChangeData from './change-data.vue'
+import testData   from '../testdata'
 
 export default {
   components:{
@@ -23,6 +24,29 @@ export default {
   data(){
     return{
       currentView: 'change-data'
+    }
+  },
+  methods: {
+    addTestData: function(){
+      console.log(testData),
+
+      // // POST запрос
+      this.$http.post('http://localhost:3000/test', testData).then(responce =>{
+        // Обработка ответа
+        this.dataResponse = responce.body
+      }, error =>{
+        // Ошибка ответа
+      });
+      
+      console.log('Тестовые данные добавлены.')
+    },
+    clearBD: function(){
+      // // POST запрос
+      this.$http.post('http://localhost:3000/delbd', {}).then(responce =>{
+      }, error =>{
+        console.log(error)
+      });
+      console.log('База отчищена.')
     }
   }
 }

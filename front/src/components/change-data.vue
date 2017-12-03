@@ -1,9 +1,10 @@
 <template>
   <div class="change-data">
     <h3 style="color: #24c2cb;">Добавить всплывающие сообщения(ошибки, удачки и т.п)</h3>
-    <p>{{ dataResponse }}</p>
     Изменить данные в базе
     <h2>Добавить запись в базу</h2>
+    <label>Пользователь: </label><input type="text" v-model="newRes.user">
+    <br><br>
     <label>День: </label><input type="text" v-model="newRes.date.day">
     <label>Месяц: </label><input type="text" v-model="newRes.date.month">
     <label>Год: </label><input type="text" v-model="newRes.date.year">
@@ -18,6 +19,7 @@ export default {
     return{
       dataResponse: '',
       newRes:{
+        user: 'latish86',
         date: {
           day: 0,
           month: 0,
@@ -38,11 +40,7 @@ export default {
       }
 
       // // POST запрос
-      this.$http.post(this.urlNewRes, {
-        one: 'one',
-        two: 'two321321',
-        three: 'three'
-      }).then(responce =>{
+      this.$http.post(this.urlNewRes, this.newRes).then(responce =>{
         // Обработка ответа
         this.dataResponse = responce.body
       }, error =>{
