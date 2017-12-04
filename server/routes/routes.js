@@ -4,10 +4,9 @@ const mongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// {date: {day: '3', month: '3', year: '16'} , rounds:[10,34,12,41,41,55,12,33,112,324,234,55,44,2]}
-
 // установка схемы
 var resultSchema = new Schema({
+    user: String,
     date: { 
     	day: Number,
     	month: Number,
@@ -20,24 +19,38 @@ exports.addResultRoute = function(req, res){
 
 	mongoose.connect("mongodb://latish86:oc87kWhd@cluster0-shard-00-00-7fcuc.mongodb.net:27017,cluster0-shard-00-01-7fcuc.mongodb.net:27017,cluster0-shard-00-02-7fcuc.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
 
-	var Result = mongoose.model('Result', resultSchema);
+  var Result = mongoose.model('Result', resultSchema);
+  
+  let data = req.body
 
 	var result = new Result({
+    user: data.user,
 		date: {
-			day: 11,
-			month: 5,
-			year: 123
+			day: data.date.day,
+			month: data.date.month,
+			year: data.date.year
 		},
-		rounds: [213,123,123,123,432,21,43]
+		rounds: data.results
 	});
 
 	result.save(function(err){
 		mongoose.disconnect();  // отключение от базы данных
      
 	    if(err) return console.log(err);
-	    console.log("Сохранен объект", result);
-	})
+	    console.log("Объект успешно сохранен...", result);
+	});
+}
 
-	console.log('Подключенный путь активирован');
-	res.send('Hell');
+exports.getResultsRoute = function(req, res){
+  var data = req.body;
+  var user = data.user; // Пользователь
+
+  if(data.type == '30day'){
+    console.log('Пользователь: '+ data.user);
+    console.log('30 дней');
+  }else if(data.type == 'month'){
+    console.log('Пользователь: '+ data.user);
+    console.log('Месяц: '+ data.params.month)
+  }
+
 }

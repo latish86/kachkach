@@ -9,7 +9,9 @@
     <label>Месяц: </label><input type="text" v-model="newRes.date.month">
     <label>Год: </label><input type="text" v-model="newRes.date.year">
     <br><br>
-    <label>Подходы(числа через запятую): </label><input type="text" v-model="newRes.results"><br><br><div class="button" @click="addResults()">Добавить</div>
+    <label>Подходы(числа через запятую): </label><input type="text" v-model="newRes.results">
+    <br><br>
+    <div class="button" @click="addResults()">Добавить</div>
   </div>
 </template>
 
@@ -27,7 +29,7 @@ export default {
         },
         results:[14,15]
       },  
-      urlNewRes: 'http://localhost:3000/test'
+      urlNewRes: 'http://localhost:3000/addresult'
     }
   },
   methods:{
