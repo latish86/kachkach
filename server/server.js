@@ -3,6 +3,15 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
+
+// Роутеры
+const routes = require('./routes/routes.js')
+
+var Schema = mongoose.Schema;
+
+// для работы с promise
+mongoose.Promise = global.Promise;
 
 app.use(express.static('front'));
 app.use(cors());
@@ -58,6 +67,7 @@ app.post('/delbd', function(req,res){
     db.close();
   }); 
 })
+app.get('/addresult', routes.addResultRoute)
 
 
 app.listen(3000, function () {
