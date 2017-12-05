@@ -48,8 +48,9 @@ export default {
       title: "Statistics for the last 30 days:",
       picked: "30day",
       monthSelected: "1",
+      yearSelected: "2016",
       days: [],
-      user: 'Nope'
+      user: "Nope"
     };
   },
   methods: {
@@ -60,22 +61,43 @@ export default {
         params: {
           month: this.monthSelected
         }
-      }
+      };
       // // POST запрос
-      this.$http.post('http://localhost:3000/getresult', reqData).then(responce =>{
-        // Обработка ответа
-        console.log(responce.body);
-        this.days = responce.body;
-      }, error =>{
-        // Ошибка ответа
-      })
+      this.$http.post("http://localhost:3000/getresult", reqData).then(
+        responce => {
+          // Обработка ответа
+          console.log(responce.body);
+          this.days = responce.body;
+        },
+        error => {
+          // Ошибка ответа
+        }
+      );
     }
+  },
+  created: function() {
+    var reqData = {
+      user: 'latish86',
+      type: this.picked,
+      params: {
+        month: this.monthSelected
+      }
+    };
+    this.$http.post("http://localhost:3000/getresult", reqData).then(
+      responce => {
+        // Обработка ответа
+        this.days = responce.body;
+      },
+      error => {
+        // Ошибка ответа
+      }
+    );
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../scss/variables.scss';
+@import "../scss/variables.scss";
 h2 {
   margin-top: 0;
   text-align: center;
