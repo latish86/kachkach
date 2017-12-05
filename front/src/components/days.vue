@@ -8,6 +8,12 @@
       <p>
         <label>За месяц: </label><input type="radio" id="month" value="month" v-model="picked">
         <span v-show="picked == 'month'">
+          <label>Выберите год</label>
+          <select v-model="yearSelected">
+              <option>2016</option><option>2017</option><option>2018</option><option>2019</option>
+          </select>
+        </span>
+        <span v-show="picked == 'month'">
           <label>Выберите месяц</label>
           <select v-model="monthSelected">
               <option>1</option><option>2</option><option>3</option><option>4</option>
@@ -15,10 +21,14 @@
               <option>9</option><option>10</option><option>11</option><option>12</option>
           </select>
         </span>
+
       </p>
       <div class="button" @click="getResults()">Получить результаты</div>
     </div>
     <div class="days">
+      <div v-if="days.length == 0">
+        Результатов не найдено.
+      </div>
       <div v-for="day in days">
         <day v-bind:day="day"></day>
       </div>
@@ -54,7 +64,8 @@ export default {
       // // POST запрос
       this.$http.post('http://localhost:3000/getresult', reqData).then(responce =>{
         // Обработка ответа
-        this.dataResponse = responce.body
+        console.log(responce.body);
+        this.days = responce.body;
       }, error =>{
         // Ошибка ответа
       })

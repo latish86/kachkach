@@ -1,7 +1,7 @@
 <template>
   <div class="day">   
     <div class="day-head">
-      <div class="date">{{ day.date.day }}.{{ day.date.month }}.{{ day.date.year }}</div>
+      <div class="date">{{ day.date.day }}.{{ day.date.month }}.{{ day.date.year }} Пользователь: {{ day.user }}</div>
       <hr>
     </div> 
     <div class="rounds">
