@@ -6,11 +6,13 @@
     <label>Пользователь: </label><input type="text" v-model="newRes.user">
     <br><br>
     <label>Число: </label>
-		<input type="text" v-model="newRes.date.day">
+		<input type="text"  v-model="newRes.date.day">
+		<br><br>
     <label>Месяц: </label>
 		<select v-model="newRes.date.month">				
-	      <option v-for="month in months">{{ month.rus }}</option>
+	    <option v-for="month in months">{{ month.rus }}</option>
 	  </select>	
+		<br><br>
     <label>Год: </label>
 		<select v-model="newRes.date.year">
       <option>2016</option><option>2017</option><option>2018</option><option>2019</option>

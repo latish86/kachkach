@@ -11,7 +11,7 @@ import { bus } from '../main';
 
 export default {
   components:{
-    'days' : Days,
+    'statistic' : Days,
     'admin-panel': AdminPanel
   },
   data () {

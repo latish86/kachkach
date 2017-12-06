@@ -3,8 +3,8 @@
     <div class="wrapper">
       <div class="logo">kachkach</div>
       <div class="right">
-        <div class="button" v-if="front" @click="changeMain('admin-panel')">Админ панель</div>
-        <div class="button" v-else @click="changeMain('days')">Статистика</div>        
+        <div class="button" v-if="front == 'admin-panel'" @click="changeMain('admin-panel')">Админ панель</div>
+        <div class="button" v-else @click="changeMain('statistic')">Статистика</div>        
         <div>login/registration</div>
       </div>
     </div>
@@ -17,15 +17,15 @@ import { bus } from '../main';
 export default {
   data () {
     return {
-      front: true
+      front: 'statistic'
     }
   },
   methods: {
     changeMain: function(data){
       if(data == 'admin-panel'){
-        this.front = false;
+        this.front = 'statistic';
       }else{
-        this.front = true;
+        this.front = 'admin-panel';
       }
       
       bus.$emit('changeMain', data);

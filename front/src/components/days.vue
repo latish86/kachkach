@@ -1,35 +1,12 @@
 <template>
   <div>
     <h2>{{ title }}</h2>
-    <div>
-      <h3>Параметры запроса</h3>
-      <p><label>User: </label><input type="text" v-model="user"></p>
-      <p><label>За последние 30 дней: </label><input type="radio" id="30day" value="30day" v-model="picked"></p>
-      <p>
-        <label>За месяц: </label><input type="radio" id="month" value="month" v-model="picked">
-        <span v-show="picked == 'month'">
-          <label>Выберите год</label>
-          <select v-model="yearSelected">
-              <option>2016</option><option>2017</option><option>2018</option><option>2019</option>
-          </select>
-        </span>
-        <span v-show="picked == 'month'">
-          <label>Выберите месяц</label>
-          <select v-model="monthSelected">
-              <option>1</option><option>2</option><option>3</option><option>4</option>
-              <option>5</option><option>6</option><option>7</option><option>8</option>
-              <option>9</option><option>10</option><option>11</option><option>12</option>
-          </select>
-        </span>
-
-      </p>
-      <div class="button" @click="getResults()">Получить результаты</div>
-    </div>
+    <params v-on:setReqParam="getResults"></params>
     <div class="days">
       <div v-if="days.length == 0">
-        Результатов не найдено.
+        <h1>Результатов не найдено.</h1>
       </div>
-      <div v-for="day in days">
+      <div v-if="days != []" v-for="day in days">
         <day v-bind:day="day"></day>
       </div>
     </div>  
@@ -38,28 +15,26 @@
 
 <script>
 import Day from "./day.vue";
+import RequestParam from "./set-param-req-result.vue";
 
 export default {
   components: {
-    day: Day
+    day: Day,
+	params: RequestParam
   },
   data() {
     return {
       title: "Statistics for the last 30 days:",
-      picked: "30day",
-      monthSelected: "1",
-      yearSelected: "2016",
-      days: [],
-      user: "Nope"
+      days: []
     };
   },
   methods: {
-    getResults: function() {
+    getResults: function(data) {
       var reqData = {
-        user: this.user,
-        type: this.picked,
+        user: data.user,
+        type: data.picked,
         params: {
-          month: this.monthSelected
+          month: data.monthSelected
         }
       };
       // // POST запрос
@@ -67,7 +42,12 @@ export default {
         responce => {
           // Обработка ответа
           console.log(responce.body);
-          this.days = responce.body;
+					if(responce.body != []){
+						this.days = responce.body;
+					}else{
+						this.days = [];
+					}
+          
         },
         error => {
           // Ошибка ответа
@@ -98,6 +78,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../scss/variables.scss";
+
 h2 {
   margin-top: 0;
   text-align: center;
@@ -109,15 +90,4 @@ h2 {
   justify-content: space-around;
 }
 
-.button {
-  background-color: $dark-blue;
-  box-sizing: border-box;
-  padding: 5px 10px;
-  color: $milk;
-  display: inline-block;
-  &:hover {
-    color: $light-blue;
-    cursor: pointer;
-  }
-}
 </style>

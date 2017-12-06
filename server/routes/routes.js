@@ -57,6 +57,7 @@ exports.getResultsRoute = function(req, res){
 
         if (docs.length == 0 ){
           console.log('Пустой результат запроса...')
+		  res.json(docs);		
         }else{       
           res.json(docs);
         }
@@ -73,7 +74,8 @@ exports.getResultsRoute = function(req, res){
         if(err) return console.log(err);
 
         if (docs.length == 0 ){
-          console.log('Пустой результат запроса... по месяцам')
+          console.log('Пустой результат запроса... по месяцам');
+		  res.json(docs);	
         }else{       
           console.log('Получено документов: '+ docs.length)
           res.json(docs);
