@@ -6,7 +6,9 @@
     <label>Пользователь: </label><input type="text" v-model="newRes.user">
     <br><br>
     <label>Дата: </label>
-		<input type="date"  v-model="newRes.date">
+		<input type="date"
+	  	v-bind:value="newRes.date"
+		>
     <br><br>
     <label>Подходы(числа через запятую): </label><input type="text" v-model="newRes.results">
     <br><br>
@@ -53,7 +55,27 @@ export default {
         // Ошибка ответа
       })
     }
-  }
+  },
+	created: function(){
+
+		// ВЫставляем дату по умолчанию
+		var date = new Date();
+		
+		if(date.getMonth() < 10){
+			var month = '0'+date.getMonth();
+		}else{
+			var month = date.getMonth();
+		}
+
+		if(date.getDate() < 10){
+			var day = '0'+date.getDate();
+		}else{
+			var day = date.getDate();
+		}
+		
+		
+		this.newRes.date =  date.getFullYear()+'-'+month+'-'+day;
+	}
 }
 </script>
 
