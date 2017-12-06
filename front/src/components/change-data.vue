@@ -5,18 +5,8 @@
     <h2>Добавить запись в базу</h2>
     <label>Пользователь: </label><input type="text" v-model="newRes.user">
     <br><br>
-    <label>Число: </label>
-		<input type="text"  v-model="newRes.date.day">
-		<br><br>
-    <label>Месяц: </label>
-		<select v-model="newRes.date.month">				
-	    <option v-for="month in months">{{ month.rus }}</option>
-	  </select>	
-		<br><br>
-    <label>Год: </label>
-		<select v-model="newRes.date.year">
-      <option>2016</option><option>2017</option><option>2018</option><option>2019</option>
-  	</select>
+    <label>Дата: </label>
+		<input type="date"  v-model="newRes.date">
     <br><br>
     <label>Подходы(числа через запятую): </label><input type="text" v-model="newRes.results">
     <br><br>
@@ -28,28 +18,9 @@
 export default {
   data(){
     return{
-      dataResponse: '',
-		  months: [
-				{ num: '1', rus: 'январь', eng: 'january'},
-				{ num: '2', rus: 'февраль', eng: 'february'},
-				{ num: '3', rus: 'март', eng: 'march'},
-				{ num: '4', rus: 'апрель', eng: 'april'},
-				{ num: '5', rus: 'май', eng: 'may'},
-				{ num: '6', rus: 'июнь', eng: 'june'},
-				{ num: '7', rus: 'июль', eng: 'july'},
-				{ num: '8', rus: 'август', eng: 'august'},
-				{ num: '9', rus: 'сентябрь', eng: 'september'},
-				{ num: '10', rus: 'октябрь', eng: 'october'},
-				{ num: '11', rus: 'ноябрь', eng: 'november'},
-				{ num: '12', rus: 'декабрь', eng: 'december'},
-			],
       newRes:{
         user: 'latish86',
-        date: {
-          day: 0,
-          month: 0,
-          year: 0,
-        },
+        date: '',
         results:[14,15]
       },  
       urlNewRes: 'http://localhost:3000/addresult'
@@ -64,8 +35,18 @@ export default {
         }
       }
 
+			var resParam = {
+				user: this.newRes.user,
+				date: {
+					day: this.newRes.date.split('-')[2],
+					month: this.newRes.date.split('-')[1],
+					year: this.newRes.date.split('-')[0]
+				},
+				results: this.newRes.results
+			}
+
       // // POST запрос
-      this.$http.post(this.urlNewRes, this.newRes).then(responce =>{
+      this.$http.post(this.urlNewRes, resParam).then(responce =>{
         // Обработка ответа
         this.dataResponse = responce.body
       }, error =>{
