@@ -36,8 +36,18 @@ exports.addResultRoute = function(req, res){
   result.save(function(err){
     mongoose.disconnect();  // отключение от базы данных
      
-      if(err) return console.log(err);
-      console.log("Объект успешно сохранен...", result);
+      if(err){
+        res.json({
+          message: err
+        })
+        return console.log(err);
+      }else{
+        res.json({
+          message: 'Succes'
+        })
+        console.log("Объект успешно сохранен...", result);
+      } 
+      
   });
 }
 
