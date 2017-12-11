@@ -65,6 +65,7 @@ app.post('api/delbd', function(req,res){
 })
 app.post('/addresult', routes.addResultRoute);
 app.post('/getresult', routes.getResultsRoute);
+app.post('/updateOneResult', routes.updateOneResultRoute);
 app.listen(3000, function () {
   console.log('Server Up!');
 })

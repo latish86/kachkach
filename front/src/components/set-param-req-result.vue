@@ -31,7 +31,7 @@ export default {
       picked: "30day",
       monthSelected: "1",
       yearSelected: "2016",
-      user: "Nope"
+      user: "latish86"
     };
   },
 	methods: {

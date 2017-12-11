@@ -1,5 +1,8 @@
 const bodyParser = require('body-parser');
 
+const config = require('../config');
+
+
 const mongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -92,4 +95,25 @@ exports.getResultsRoute = function(req, res){
         }
     });
   }
+}
+
+exports.updateOneResultRoute = function(req, res){
+  var data = req.body;
+  var user = data.user; // Пользователь
+
+  // console.log(data);
+
+  mongoose.connect(config.DBConnectURI);
+
+  var Result = mongoose.model('Result', resultSchema);
+
+  Result.findById(data.id, function(err, day){
+    if(err) throw err;
+    day.rounds = data.rounds;
+    day.save(function(err,){
+      if (err) throw err;
+      console.log('Udate succeful');
+    })
+  })
+  
 }

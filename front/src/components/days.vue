@@ -37,7 +37,7 @@ export default {
           month: data.monthSelected
         }
       };
-      // // POST запрос
+      // POST запрос
       this.$http.post("http://localhost:3000/getresult", reqData).then(
         responce => {
           // Обработка ответа

@@ -16,7 +16,7 @@ export default {
   },
   data () {
     return {
-      currentView: 'admin-panel'
+      currentView: 'statistic'
     }
   },
   created(){
