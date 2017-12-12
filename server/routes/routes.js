@@ -97,17 +97,28 @@ exports.getResultsRoute = function(req, res){
     let date = moment(data.params.year+"-"+data.params.month, "YYYY-MM");
 
     Result.find({user: data.user,
-                 'date.year' : data.params.year,
-                 'date.month': data.params.month,
-                 'date.day'  : { $gte: 1, $lte: date.daysInMonth() } // Делать выборку по реально существующим датам
-                }, function(err, docs){
+        'date.year' : data.params.year,
+        'date.month': data.params.month,
+        'date.day'  : { $gte: 1, $lte: date.daysInMonth() } // Делать выборку по реально существующим датам
+      }, function(err, docs){
         mongoose.disconnect();
          
         if(err) return console.log(err);
 
+        for(let i = 1; i<=date.daysInMonth(); i++){
+          let flag = false;
+
+          if (!docs.some(function(elem, index, array){
+            return Number(elem.date.day) == i
+          })){
+            docs.push({user: data.user, date: {year: data.params.year, month: data.params.month, day: i } })
+          } 
+          
+        }
+        
         if (docs.length == 0 ){
           console.log('Пустой результат запроса... по месяцам');
-		  res.json(docs);	
+		      res.json(docs);	
         }else{       
           console.log('Получено документов: '+ docs.length)
           res.json(docs);
