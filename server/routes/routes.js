@@ -58,12 +58,19 @@ exports.getResultsRoute = function(req, res){
   var data = req.body;
   var user = data.user; // Пользователь
 
-  if(data.type == '30day'){
+  if(data.type == 'currentMonth'){
     mongoose.connect("mongodb://latish86:oc87kWhd@cluster0-shard-00-00-7fcuc.mongodb.net:27017,cluster0-shard-00-01-7fcuc.mongodb.net:27017,cluster0-shard-00-02-7fcuc.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
    
     var Result = mongoose.model('Result', resultSchema);
+
+    // Создаем объект moment для работы с датой
+    let date = moment();
      
-    Result.find({user: data.user}, function(err, docs){
+    Result.find({user: data.user,
+                'date.year' : date.format('YYYY'),
+                'date.month': date.format('MM'),
+                'date.day'  : { $gte: 1, $lte: date.daysInMonth() } // Делать выборку по реально существующим датам             
+    }, function(err, docs){
         mongoose.disconnect();
          
         if(err) return console.log(err);
@@ -81,19 +88,18 @@ exports.getResultsRoute = function(req, res){
    
     var Result = mongoose.model('Result', resultSchema);
 
+    // Приводим месяц к формату MM
     if(data.params.month<10){
       data.params.month = '0'+ data.params.month
     }
-
-    console.log('Month: '+data.params.month)
     
+    // Создаем объект moment для работы с датой
     let date = moment(data.params.year+"-"+data.params.month, "YYYY-MM");
-    console.log('Количество дней в месяце: '+date.daysInMonth());
 
     Result.find({user: data.user,
                  'date.year' : data.params.year,
                  'date.month': data.params.month,
-                 'date.day'  : { $gte: 1, $lte: date.daysInMonth() }
+                 'date.day'  : { $gte: 1, $lte: date.daysInMonth() } // Делать выборку по реально существующим датам
                 }, function(err, docs){
         mongoose.disconnect();
          

@@ -17,7 +17,7 @@ import { bus } from '../main';
 export default {
   data () {
     return {
-      front: 'statistic'
+      front: 'admin-panel'
     }
   },
   methods: {

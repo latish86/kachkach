@@ -10,7 +10,7 @@
     <br><br>
     <label>Дата: </label>
 		<input type="date"
-	  	v-bind:value="newRes.date"
+	  	v-model:value="newRes.date"
 		>
     <br><br>
     <label>Подходы(числа через запятую): </label><input type="text" v-model="newRes.results">
@@ -48,7 +48,9 @@ export default {
 					year: this.newRes.date.split('-')[0]
 				},
 				results: this.newRes.results
-			}
+      }
+      
+      console.log(this.newRes.date)
 
       // // POST запрос
       this.resMessage = "Зопрос отправлен"

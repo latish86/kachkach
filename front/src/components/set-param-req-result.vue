@@ -2,7 +2,7 @@
 	<div class="set-param-widget">
     <h3>Параметры запроса</h3>
     <p><label>User: </label><input type="text" v-model="user"></p>
-    <p><label>За последние 30 дней: </label><input type="radio" id="30day" value="30day" v-model="picked"></p>
+    <p><label>Текущий месяц: </label><input type="radio" id="30day" value="currentMonth" v-model="picked"></p>
     <p>
       <label>За месяц: </label><input type="radio" id="month" value="month" v-model="picked">
       <span v-show="picked == 'month'">
@@ -28,7 +28,7 @@
 export default {
 	data() {
     return {
-      picked: "30day",
+      picked: "currentMonth",
       monthSelected: "1",
       yearSelected: "2016",
       user: "latish86"

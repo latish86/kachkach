@@ -22,7 +22,6 @@ export default {
   created(){
     bus.$on('changeMain', (data) => {      
       this.currentView = data;
-      console.log(this.currentView)
     })
   }
 }
