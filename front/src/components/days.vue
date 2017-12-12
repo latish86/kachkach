@@ -20,7 +20,7 @@ import RequestParam from "./set-param-req-result.vue";
 export default {
   components: {
     day: Day,
-	params: RequestParam
+	  params: RequestParam
   },
   data() {
     return {
@@ -34,7 +34,8 @@ export default {
         user: data.user,
         type: data.picked,
         params: {
-          month: data.monthSelected
+          month: data.monthSelected,
+          year : data.yearSelected
         }
       };
       // POST запрос

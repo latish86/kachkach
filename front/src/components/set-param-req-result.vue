@@ -8,7 +8,7 @@
       <span v-show="picked == 'month'">
         <label>Выберите год</label>
         <select v-model="yearSelected">
-            <option>2016</option><option>2017</option><option>2018</option><option>2019</option>
+            <option>2013</option><option>2020</option><option>2016</option><option>2017</option><option>2018</option><option>2019</option>
         </select>
       </span>
       <span v-show="picked == 'month'">
