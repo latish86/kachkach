@@ -6,7 +6,10 @@ const mongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
 
 // Роутеры
-const routes = require('./routes/routes.js')
+const routes = require('./routes/routes.js');
+
+// Файл с конфигурацией приложения
+const config = require('./config');
 
 var Schema = mongoose.Schema;
 
@@ -20,7 +23,7 @@ app.use(bodyParser.json());
 
 
 
-
+////// НАХРЕНА ОНО НУЖНО  ///////////////////////
 app.post('api/test', function (req, res) {
   let data = req.body
   console.log(req.body);
@@ -46,23 +49,10 @@ app.post('api/test', function (req, res) {
     db.close();
   });  
 })
-app.post('api/delbd', function(req,res){
-  mongoClient.connect("mongodb://localhost:27017/test", function (err, db) {
-    if (err) {
-      return console.log(err);
-    }
-    var collection = db.collection('test');
-    collection.drop( function (err, result) {
-      if (err) {
-        return console.log(err);
-      }
-      console.log(result.ops);
-      console.log('Коллекция удалена')
-      db.close();
-    });    
-    db.close();
-  }); 
-})
+//////////////////////////////////////////////////
+
+
+app.post('/delbd', routes.clearDBRoute);
 app.post('/addresult', routes.addResultRoute);
 app.post('/getresult', routes.getResultsRoute);
 app.post('/updateOneResult', routes.updateOneResultRoute);

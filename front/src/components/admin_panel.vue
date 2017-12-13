@@ -31,7 +31,7 @@ export default {
       console.log(testData),
 
       // // POST запрос
-      this.$http.post('http://localhost:3000/test', testData).then(responce =>{
+      this.$http.post(this.$root.serverurl+'/test', testData).then(responce =>{
         // Обработка ответа
         this.dataResponse = responce.body
       }, error =>{
@@ -42,7 +42,7 @@ export default {
     },
     clearBD: function(){
       // // POST запрос
-      this.$http.post('http://localhost:3000/delbd', {}).then(responce =>{
+      this.$http.post(this.$root.serverurl+'/delbd', {}).then(responce =>{
       }, error =>{
         console.log(error)
       });
