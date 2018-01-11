@@ -20,7 +20,7 @@ var resultSchema = new Schema({
 
 // Добавление дня
 exports.addResultRoute = function (req, res) {
-
+  mongoose.disconnect();
   mongoose.connect("mongodb://latish86:oc87kWhd@cluster0-shard-00-00-7fcuc.mongodb.net:27017,cluster0-shard-00-01-7fcuc.mongodb.net:27017,cluster0-shard-00-02-7fcuc.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
 
   var Result = mongoose.model('Result', resultSchema);
@@ -72,6 +72,7 @@ exports.getResultsRoute = function (req, res) {
   var user = data.user; // Пользователь
 
   if (data.type == 'currentMonth') {
+    mongoose.disconnect();
     mongoose.connect("mongodb://latish86:oc87kWhd@cluster0-shard-00-00-7fcuc.mongodb.net:27017,cluster0-shard-00-01-7fcuc.mongodb.net:27017,cluster0-shard-00-02-7fcuc.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
 
     var Result = mongoose.model('Result', resultSchema);
@@ -98,6 +99,7 @@ exports.getResultsRoute = function (req, res) {
 
     });
   } else if (data.type == 'month') {
+    mongoose.disconnect();
     mongoose.connect("mongodb://latish86:oc87kWhd@cluster0-shard-00-00-7fcuc.mongodb.net:27017,cluster0-shard-00-01-7fcuc.mongodb.net:27017,cluster0-shard-00-02-7fcuc.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin");
 
     var Result = mongoose.model('Result', resultSchema);
@@ -148,7 +150,7 @@ exports.updateOneResultRoute = function (req, res) {
   var user = data.user; // Пользователь
 
   // console.log(data);
-
+  mongoose.disconnect();
   mongoose.connect(config.DBConnectURI);
 
   var Result = mongoose.model('Result', resultSchema);

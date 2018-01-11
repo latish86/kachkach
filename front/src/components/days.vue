@@ -16,6 +16,7 @@
 <script>
 import Day from "./day.vue";
 import RequestParam from "./set-param-req-result.vue";
+import { bus } from '../main';
 
 export default {
   components: {
@@ -44,11 +45,12 @@ export default {
           // Обработка ответа
           console.log(responce.body);
 					if(responce.body != []){
-						this.days = responce.body;
+            this.days = responce.body;
+            // Отправляем данные в debug
+            bus.$emit('debug', responce.body);
 					}else{
 						this.days = [];
-					}
-          
+					}          
         },
         error => {
           // Ошибка ответа
